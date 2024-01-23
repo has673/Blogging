@@ -6,6 +6,8 @@ const path = require('path');
 const app = express();
 const port = process.env.PORT || 3000;
 const cookieParser = require('cookie-parser');
+const authRouter = require('./Routes/Auth');
+const adminRouter = require('./Routes/Admin');
 require('dotenv').config();
 connectDB()
 app.listen(port, () => {
@@ -17,3 +19,5 @@ app.use(cors());
 app.use(express.json());
 // app.use('/uploads', express.static(__dirname + '/uploads'))
 app.use(cookieParser())
+app.use('/auth', authRouter);
+app.use('/admin', adminRouter);
