@@ -1,5 +1,5 @@
 const jwt=require('jsonwebtoken')
-
+const User = require('../Models/User')
 const verifyToken=(req,res,next)=>{
     const token=req.cookies.token
     // console.log(token)
@@ -18,7 +18,29 @@ const verifyToken=(req,res,next)=>{
         next()
     })
 }
+const verifyAdmin= async (req,res,next)=>{
+    try {
+        const user = await User.findById(req.user._id);
+        if (user.role !== "Admin") {
+          return res.status(401).send({
+            success: false,
+            message: "UnAuthorized Access",
+          });
+        } else {
+          next();
+        }
+      } catch (error) {
+        console.log(error);
+        res.status(401).send({
+          success: false,
+          error,
+          message: "Error in admin middelware",
+        });
+      }
+    
+}
 
 module.exports= {
-    verifyToken
+    verifyToken,
+    verifyAdmin
 }

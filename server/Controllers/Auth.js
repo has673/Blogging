@@ -37,7 +37,7 @@ const jwt = require('jsonwebtoken');
          res.status(404).json({message:"INvalid Password " })
       }
       const token = jwt.sign(
-         { _id: user._id, email: user.email },
+         { _id: user.id, email: user.email },
          process.env.jwtsecret,
          { expiresIn: "3d" }
        );
