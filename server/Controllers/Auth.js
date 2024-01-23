@@ -21,6 +21,35 @@ const jwt = require('jsonwebtoken');
 
    }
  }
+ async function Login(req,res,next){
+   try{
+      const{email , password} = req.body
+      if(!email || !password){
+         res.status(404).json({message:"empty " })
+      }
+      const user = await User.findOne({email:email})
+      if(!user){
+         res.status(404).json({message:"INvalid Email " })
+
+      }
+      const newpass = bcrypt.compareSync(password , user.password)
+      if(!newpass){
+         res.status(404).json({message:"INvalid Password " })
+      }
+      const token = jwt.sign(
+         { _id: user._id, email: user.email },
+         process.env.jwtsecret,
+         { expiresIn: "3d" }
+       );
+       console.log('logged in')
+       res.cookie("token", token).status(200).json({email : user.email , token : token});
+
+   }
+   catch{
+      res.status(500).json({message:"internal server error"})
+   }
+ }
  module.exports = {
-    registerUser
+    registerUser,
+    Login
  }
