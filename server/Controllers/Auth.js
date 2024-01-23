@@ -16,7 +16,8 @@ const jwt = require('jsonwebtoken');
     return res.status(200).json({ message: "User added", user: newuser , id:user._id});
 
    }
-   catch{
+   catch(err){
+      console.log(err)
     return res.status(500).json({message : "Internal server error"})
 
    }
@@ -37,7 +38,7 @@ const jwt = require('jsonwebtoken');
          res.status(404).json({message:"INvalid Password " })
       }
       const token = jwt.sign(
-         { _id: user.id, email: user.email },
+         { _id: user._id, email: user.email },
          process.env.jwtsecret,
          { expiresIn: "3d" }
        );
@@ -45,7 +46,8 @@ const jwt = require('jsonwebtoken');
        res.cookie("token", token).status(200).json({email : user.email , token : token , id:user._id});
 
    }
-   catch{
+   catch(err){
+      console.log(err)
       res.status(500).json({message:"internal server error"})
    }
  }
