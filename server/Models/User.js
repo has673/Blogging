@@ -17,6 +17,11 @@ const UserSchema = new mongoose.Schema({
     role:{
         type:String,
         
+    },
+    Blogs:{
+        type:mongoose.ObjectId,
+        ref:'Blog',
+        required:true
     }
     
     
