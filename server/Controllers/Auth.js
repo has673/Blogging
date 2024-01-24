@@ -13,11 +13,11 @@ const jwt = require('jsonwebtoken');
     const newuser = new User({...req.body , password:newpass})
     await newuser.save()
     console.log('New User Added')
-    return res.status(200).json({ message: "User added", user: newuser , id:user._id});
+    return res.status(200).json({ message: "User added", user: newuser , success:true});
 
    }
    catch(err){
-      console.log(err)
+   console.log(err)
     return res.status(500).json({message : "Internal server error"})
 
    }
