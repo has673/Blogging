@@ -9,4 +9,5 @@ router.get('/getblogbyid/:id' , verifyToken , Blog.getBlogbyid)
 
 
 
+
 module.exports = router

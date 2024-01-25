@@ -7,5 +7,6 @@ const router = express.Router();
 // Example: Define a route that requires authentication
 router.get("/getuserbyid/:id", verifyToken, usercontroller.getuserbyid);
 router.put('/updateuser/:id', verifyToken, usercontroller.updateuser)
+router.get('/myblogs', verifyToken, usercontroller.myblogs)
 
 module.exports = router;

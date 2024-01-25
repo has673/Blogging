@@ -56,7 +56,10 @@ async function getBlogbyid(req,res,next){
     }
 }
 
+
+
 module.exports = {CreateBlog 
 ,getBlogs,
-getBlogbyid
+getBlogbyid,
+
 }

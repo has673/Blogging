@@ -32,9 +32,24 @@ async function updateuser(req,res,next){
         res.status(500).json({ message: 'internal server error' });
     }
 }
+async function myblogs(req,res,next){
+    try {
+        // Assuming user information is attached to the request object during authentication
+        const userId = req.user._id;
+    
+        // Fetch blogs for the authenticated user
+        const blogs = await Blog.find({ user: userId });
+        console.log('my blogs')
+        res.status(200).json(blogs);
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal server error' });
+      }
+    };
 
 module.exports = {
     
     getuserbyid,
-    updateuser
+    updateuser,
+    myblogs
 };
