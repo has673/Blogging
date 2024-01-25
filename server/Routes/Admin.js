@@ -9,7 +9,7 @@ router.delete('/deleteauser/:id', verifyToken, verifyAdmin , Admin.deleteauser)
 router.get('/getblogs' , verifyToken , Admin.getBlogs)
 router.get('/getblogbyid/:id' , verifyToken , Admin.getBlogbyid)
 router.delete('/deleteablog/:id', verifyToken, verifyAdmin , Admin.deleteBlogbyid)
-
+router.get('/getblogbyuser/:id' , verifyToken , Admin.getblogbyuser)
 
 
 module.exports = router

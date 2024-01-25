@@ -71,11 +71,26 @@ async function getBlogbyid(req,res,next){
         res.status(500).json({ message: 'internal server error' });
     }
 }
+async function getblogbyuser(req,res,next){
+    try{
+        const userId = req.params.id;
+        const blog = await  Blog.find({user:userId})
+        console.log("Blogs  by a user")
+        return res.status(200).json(blog)
+
+    }
+    catch{
+        console.error(err);
+        res.status(500).json({ message: 'internal server error' });
+        
+    }
+}
 module.exports = {
     getAllusers,
     getauser,
     deleteauser,
     deleteBlogbyid,
     getBlogbyid,
-    getBlogs
+    getBlogs,
+    getblogbyuser
  }

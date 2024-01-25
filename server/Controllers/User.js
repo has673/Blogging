@@ -1,4 +1,5 @@
 const User = require('../Models/User');
+const Blog = require('../Models/Blog');
 async function getuserbyid(req, res, next) {
     try {
         const user = await User.findById(req.params.id);
