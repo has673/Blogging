@@ -18,11 +18,13 @@ const UserSchema = new mongoose.Schema({
         type:String,
         
     },
-    Blogs:{
+    Blogs:[
+    {
         type:mongoose.ObjectId,
         ref:'Blog',
         
     }
+],
     
     
 }
