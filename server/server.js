@@ -9,6 +9,7 @@ const cookieParser = require('cookie-parser');
 const authRouter = require('./Routes/Auth');
 const adminRouter = require('./Routes/Admin');
 const userRouter = require('./Routes/User');
+const blogRouter = require('./Routes/Blog');
 require('dotenv').config();
 connectDB()
 app.listen(port, () => {
@@ -23,3 +24,4 @@ app.use(cookieParser())
 app.use('/auth', authRouter);
 app.use('/admin', adminRouter);
 app.use('/user', userRouter);
+app.use('/blog', blogRouter);

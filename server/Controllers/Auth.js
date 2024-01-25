@@ -22,35 +22,71 @@ const jwt = require('jsonwebtoken');
 
    }
  }
- async function Login(req,res,next){
-   try{
-      const{email , password} = req.body
-      if(!email || !password){
-         res.status(404).json({message:"empty " })
-      }
-      const user = await User.findOne({email:email})
-      if(!user){
-         res.status(404).json({message:"INvalid Email " })
+//  async function Login(req,res,next){
+//    try{
+//       const{email , password} = req.body
+//       if(!email || !password){
+//          res.status(404).json({message:"empty " })
+//       }
+//       const user = await User.findOne({email:email})
+//       if(!user){
+//          res.status(404).json({message:"INvalid Email " })
 
-      }
-      const newpass = bcrypt.compareSync(password , user.password)
-      if(!newpass){
-         res.status(404).json({message:"INvalid Password " })
-      }
-      const token = jwt.sign(
-         { _id: user._id, email: user.email },
-         process.env.jwtsecret,
-         { expiresIn: "3d" }
+//       }
+//       const newpass = bcrypt.compareSync(password , user.password)
+//       if(!newpass){
+//          res.status(404).json({message:"INvalid Password " })
+//       }
+//       const token = jwt.sign(
+//          { _id: user._id, email: user.email },
+//          process.env.jwtsecret,
+//          { expiresIn: "3d" }
+//        );
+//        console.log('logged in')
+//        res.cookie("token", token).status(200).json({email : user.email , token : token , id:user._id});
+
+//    }
+//    catch(err){
+//       console.log(err)
+//       res.status(500).json({message:"internal server error"})
+//    }
+//  }
+async function Login(req, res, next) {
+   try {
+       const { email, password } = req.body;
+
+       if (!email || !password) {
+           return res.status(400).json({ message: "Empty fields" });
+       }
+
+       const user = await User.findOne({ email: email });
+
+       if (!user) {
+           console.log('not a user')
+           return res.status(404).json({ message: "Invalid Email" });
+       }
+
+       const passwordMatch = await bcrypt.compare(password, user.password);
+
+       if (!passwordMatch) {
+         console.log('incoreet password')
+           return res.status(401).json({ message: "Invalid Password" });
+       }
+
+       const token = jwt.sign(
+           { _id: user._id, email: user.email },
+           process.env.jwtsecret,
+           { expiresIn: "3d" }
        );
-       console.log('logged in')
-       res.cookie("token", token).status(200).json({email : user.email , token : token , id:user._id});
 
+       console.log('logged in');
+       res.cookie("token", token).status(200).json({ email: user.email, token: token, id: user._id });
+
+   } catch (err) {
+       console.log(err);
+       res.status(500).json({ message: "Internal server error" });
    }
-   catch(err){
-      console.log(err)
-      res.status(500).json({message:"internal server error"})
-   }
- }
+}
  async function forgotPasword(req,res,next){
    try{
       const{email , password} = req.body
@@ -58,7 +94,7 @@ const jwt = require('jsonwebtoken');
       console.log('mail')
       if(!user){
          console.log('invalid email')
-          res.status(404).json({message:"Invalid Email " })
+         return   res.status(404).json({message:"Invalid Email " })
 
       }
       

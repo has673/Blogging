@@ -20,7 +20,7 @@ const UserSchema = new mongoose.Schema({
     },
     Blogs:[
     {
-        type:mongoose.ObjectId,
+        type:mongoose.Schema.Types.ObjectId,
         ref:'Blog',
         
     }
