@@ -4,6 +4,8 @@ import { BrowserRouter, createBrowserRouter, Link, Route, NavLink, createRoutesF
 import Registor from './Pages/Registor';
 import Login from './Pages/Login';
 import Layout from './components/Layout';
+import Home from './Pages/Home';
+import About from './Pages/About';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
@@ -13,7 +15,9 @@ const router = createBrowserRouter(
         <Route path='signup' element={<Registor />}/> 
         <Route path='Login' element={<Login/>} />
         <Route path='/' element={<Layout/>}>
-
+          <Route path='/Home' element={<Home/>}/>
+          <Route path='/About' element={<About/>}/>
+          <Route path='/Contact' element={<Contact/>}/>
         </Route>
        
 

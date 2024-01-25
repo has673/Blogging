@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 function Header() {
   return (
@@ -9,10 +10,10 @@ function Header() {
 
       {/* Navbar Links */}
       <div className="space-x-4">
-        <a href="#" className="text-white hover:text-gray-300">Home</a>
-        <a href="#" className="text-white hover:text-gray-300">About</a>
-        <a href="#" className="text-white hover:text-gray-300">Services</a>
-        <a href="#" className="text-white hover:text-gray-300">Contact</a>
+  
+        <Link href="/About" className="text-white hover:text-gray-300">About</Link>
+        <Link href="/Contact" className="text-white hover:text-gray-300">About</Link>
+       
       </div>
     </nav>
   </div>
