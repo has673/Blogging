@@ -3,6 +3,7 @@ import { BrowserRouter, createBrowserRouter, Link, Route, NavLink, createRoutesF
 
 import Registor from './Pages/Registor';
 import Login from './Pages/Login';
+import Layout from './components/Layout';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
@@ -11,6 +12,9 @@ const router = createBrowserRouter(
         <Route path='getrecipe' element={<Get />}></Route> */}
         <Route path='signup' element={<Registor />}/> 
         <Route path='Login' element={<Login/>} />
+        <Route path='/' element={<Layout/>}>
+
+        </Route>
        
 
       </Route>
