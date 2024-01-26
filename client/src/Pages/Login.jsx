@@ -1,7 +1,13 @@
-import React , {useState} from 'react'
+import React , {useState , useContext} from 'react'
 import axios from 'axios'
+import { authcontext } from '../Context/Authcontext';
+import { useNavigate } from 'react-router-dom';
+
 
 function Login() {
+  const { setUser } = useContext(authcontext);
+  const [err , setErr] = useState('')
+  const navigate = useNavigate()
     const initialState = {
        
         email:'',
@@ -21,10 +27,11 @@ function Login() {
         })
      
     }
+  
    async   function HandleSubmit(e){
     e.preventDefault();
     try {
-        const res = await axios.post('http://localhost:3000/auth/signup', {
+        const res = await axios.post('http://localhost:3000/auth/login', {
          
           email: userdata.email,
           password: userdata.password,
@@ -32,8 +39,19 @@ function Login() {
   
         // Handle the response here, like showing a success message or redirecting
         console.log('Response from server:', res.data);
-        // toast.success(res.data.message)
-        // navigate('/login')
+        if (res.status === 200) {
+       
+          const userid = res.data.id
+          setUser(res.data);
+          localStorage.setItem("userId" , userid)
+          // toast.success(res.data.message)
+          navigate('/Home')
+      } else {
+          // Handle other scenarios, like displaying an error message
+          console.error('Error:', res.data.message);
+          setErr(res.data.message);
+      }
+       
       } catch (error) {
         // Handle errors here, like showing an error message
         console.error('Error:', error.message);
@@ -64,12 +82,13 @@ function Login() {
                 className="p-2 border border-gray-300 rounded-2xl"
             />
         </div>
+        <p className='text-red-500 mb-8'>{err.message}</p>
         <button
             type='button'
             onClick={HandleSubmit}
             className="p-3 bg-green-500 text-white rounded-xl cursor-pointer hover:bg-green-600"
         >
-            Register
+            Login
         </button>
     </form>
 </div>

@@ -6,24 +6,19 @@ import Login from './Pages/Login';
 import Layout from './components/Layout';
 import Home from './Pages/Home';
 import About from './Pages/About';
+import Contact from './Pages/Contact';
+import Dashboard from './Pages/Admin/Dashboard';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route>
-        {/* <Route path='addrecipe' element={<Add />}></Route>
-        <Route path='getrecipe' element={<Get />}></Route> */}
-        <Route path='signup' element={<Registor />}/> 
-        <Route path='Login' element={<Login/>} />
-        <Route path='/' element={<Layout/>}>
-          <Route path='/Home' element={<Home/>}/>
-          <Route path='/About' element={<About/>}/>
-          <Route path='/Contact' element={<Contact/>}/>
-        </Route>
-       
-
-      </Route>
-
-
+      <Route path='/signup' element={<Registor />} />
+      <Route path='/login' element={<Login />} />
+      <Route path='/' element={<Layout />}>
+        <Route path='/Home' element={<Home />} />
+        <Route path='/About' element={<About />} />
+        <Route path='/Contact' element={<Contact />} />
+        <Route path='/Dashboard' element={<Dashboard />} />
+      </Route> 
     </>
   )
 )
