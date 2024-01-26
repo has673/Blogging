@@ -1,7 +1,7 @@
 import React , {useState , useContext} from 'react'
 import axios from 'axios'
 import { authcontext } from '../Context/Authcontext';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 function Login() {
@@ -91,6 +91,7 @@ function Login() {
             Login
         </button>
     </form>
+    <span><Link>Forgot Password ?</Link></span>
 </div>
 
   )

@@ -8,11 +8,13 @@ import Home from './Pages/Home';
 import About from './Pages/About';
 import Contact from './Pages/Contact';
 import Dashboard from './Pages/Admin/Dashboard';
+import Forgot from './Pages/Forgot';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path='/signup' element={<Registor />} />
       <Route path='/login' element={<Login />} />
+      <Route path='forgot' element={<Forgot/>}/>
       <Route path='/' element={<Layout />}>
         <Route path='/Home' element={<Home />} />
         <Route path='/About' element={<About />} />
