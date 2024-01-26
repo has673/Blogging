@@ -8,6 +8,7 @@ function Header() {
   const handleLogout = () => {
     // Perform logout logic, e.g., clear user data from context
     setUser(null);
+    localStorage.removeItem('userId')
     // You may also want to perform any server-side logout logic (clearing session, etc.)
   };
 
