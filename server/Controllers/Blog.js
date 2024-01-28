@@ -1,10 +1,16 @@
 const Blog = require('../Models/Blog')
 const User = require('../Models/User')
+const fs = require('fs')
 async function CreateBlog(req,res,next){
     try{
         const userId = req.params.id;
-        const{title , content } = req.body
-        const newblog =  new Blog({...req.body , user:userId})
+        const { photo } = req.files;
+        const{title , content } = req.fields
+        const newblog =  new Blog({...req.fields , user:userId})
+        if (photo) {
+            newblog.photo.data = fs.readFileSync(photo.path);
+            newblog.photo.contentType = photo.type;
+          }
         await newblog.save()
         console.log("Blog Creted <3")
         const updatedUser = await User.findByIdAndUpdate(

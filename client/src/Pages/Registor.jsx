@@ -33,20 +33,22 @@ function Registor() {
           email: userdata.email,
           password: userdata.password,
         });
+        if(res.data.success){
+          console.log(res.data.message)
+
+          navigate('/login')
+        }
+        else{
+          console.log('henry')
+          console.log(res.data.message)
+          setErr(res.data.message)
+        }
   
-        // Handle the response here, like showing a success message or redirecting
-        if (res.status === 200) {
-       
-          navigate('/Login');
-      } else {
-          // Handle other scenarios, like displaying an error message
-          console.error('Error:', res.data.message);
-          setErr(res.data.message);
-      }
       } catch (error) {
         // Handle errors here, like showing an error message
-        console.error('Error:', error.message);
-        setErr(error)
+        console.log('Error:', error.message);
+        setErr(error.message)
+        // setErr(error)
       }
   
     }

@@ -1,4 +1,6 @@
-import React from 'react'
+import React , {useState} from 'react'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
 
 function Forgot() {
     const navigate = useNavigate()
@@ -25,7 +27,7 @@ function Forgot() {
      async   function HandleSubmit(e){
       e.preventDefault();
       try {
-          const res = await axios.post('http://localhost:3000/auth/forgotPassword', {
+          const res = await axios.put('http://localhost:3000/auth/forgotPassword', {
            
             email: userdata.email,
             password: userdata.password,
@@ -77,7 +79,7 @@ function Forgot() {
               onClick={HandleSubmit}
               className="p-3 bg-green-500 text-white rounded-xl cursor-pointer hover:bg-green-600"
           >
-              Register
+              Submit
           </button>
       </form>
   </div>

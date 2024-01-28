@@ -7,13 +7,13 @@ const jwt = require('jsonwebtoken');
     const user = await User.findOne({email:email})
     if(user){
         console.log("Email already in use")
-        return res.status(200).json({message:"User already Exists."})
+        return res.status(400).send({success:false , message:"User already Exists."})
     }
     const newpass = bcrypt.hashSync(password,10)
     const newuser = new User({...req.body , password:newpass})
     await newuser.save()
     console.log('New User Added')
-    return res.status(200).json({ message: "User added", user: newuser , success:true});
+    return res.status(200).send({ success:true ,  message: "User added", user: newuser , success:true});
 
    }
    catch(err){

@@ -14,7 +14,11 @@ const BlogSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref:"User",
         required:true,
-    }
+    },
+    photo: {
+        data: Buffer,
+        contentType: String,
+      },
    
 },
  { timestamps: true }
