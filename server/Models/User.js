@@ -18,12 +18,17 @@ const UserSchema = new mongoose.Schema({
         type:String,
         
     },
+    photo: {
+        data: Buffer,
+        contentType: String,
+     },
     Blogs:[
     {
         type:mongoose.Schema.Types.ObjectId,
         ref:'Blog',
         
-    }
+    },
+   
 ],
     
     
