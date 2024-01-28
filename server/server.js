@@ -4,8 +4,7 @@ const cors = require('cors');
 const{connectDB} = require('./config/db');
 const path = require('path');
 const app = express();
-// const multer = require('multer')
-// const upload = multer({ dest: 'uploads/' })
+
 
 const port = process.env.PORT || 3000;
 const cookieParser = require('cookie-parser');
@@ -22,7 +21,7 @@ app.listen(port, () => {
 
 app.use(cors());
 app.use(express.json());
-// app.use('/uploads', express.static(__dirname + '/uploads'))
+
 app.use(cookieParser())
 app.use('/auth', authRouter);
 app.use('/admin', adminRouter);
