@@ -61,11 +61,30 @@ async function getBlogbyid(req,res,next){
         res.status(500).json({ message: 'internal server error' });
     }
 }
+async function getphoto(req,res,next){
+    try{
+         const blog = await Blog.findById(req.params.id).select("photo");
+    if (blog.photo.data) {
+      res.set("Content-type", product.photo.contentType);
+      return res.status(200).send(blog.photo.data);
+    }
+
+    }
+    catch(err){
+        console.log(err)
+         res.status(500).send({
+      success: false,
+      message: "Erorr while getting photo",
+      err,
+    });
+    }
+}
 
 
 
 module.exports = {CreateBlog 
 ,getBlogs,
 getBlogbyid,
+getphoto
 
 }
