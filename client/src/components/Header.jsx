@@ -1,14 +1,16 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { authcontext } from '../Context/Authcontext';
 
 function Header() {
   const { user, setUser } = useContext(authcontext);
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     // Perform logout logic, e.g., clear user data from context
     setUser(null);
-    localStorage.removeItem('userId')
+    localStorage.removeItem('userId');
+    
     // You may also want to perform any server-side logout logic (clearing session, etc.)
   };
 
@@ -28,14 +30,19 @@ function Header() {
               Contact
             </Link>
 
+            {/* Profile Link */}
             {user ? (
-              // If user is logged in, show logout button
-              <button
-                onClick={handleLogout}
-                className="text-white hover:text-gray-300 cursor-pointer"
-              >
-                Logout
-              </button>
+              <>
+                <Link to="/profile" className="text-white hover:text-gray-300">
+                  Profile
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="text-white hover:text-gray-300 cursor-pointer"
+                >
+                  Logout
+                </button>
+              </>
             ) : (
               // If user is not logged in, show login and signup links
               <>

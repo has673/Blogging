@@ -9,6 +9,9 @@ import About from './Pages/About';
 import Contact from './Pages/Contact';
 import Dashboard from './Pages/Admin/Dashboard';
 import Forgot from './Pages/Forgot';
+import Profile from './Pages/User/Profile';
+import Privateroute from './components/Privateroute';
+import Singleblog from './Pages/Singleblog';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
@@ -20,6 +23,11 @@ const router = createBrowserRouter(
         <Route path='/About' element={<About />} />
         <Route path='/Contact' element={<Contact />} />
         <Route path='/Dashboard' element={<Dashboard />} />
+        <Route path='/blog/:id' element={<Singleblog/>} />
+        {/* <Route path='/' element={<Privateroute />}>
+        <Route path='/Profile' element={<Profile />} />
+
+        </Route> */}
       </Route> 
     </>
   )
