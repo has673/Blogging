@@ -4,7 +4,7 @@ const {verifyToken , verifyAdmin} = require('../Utils/Verify')
 const router = express.Router()
 
 router.get("/Showusers",/*verifyToken, verifyAdmin,*/ Admin.getAllusers)
-router.get('/Showauser/:id',verifyToken, verifyAdmin , Admin.getauser)
+router.get('/Showauser/:id',/*verifyToken, verifyAdmin */ Admin.getauser)
 router.delete('/deleteauser/:id', /*verifyToken, verifyAdmin */ Admin.deleteauser)
 router.get('/getblogs' , verifyToken , Admin.getBlogs)
 router.get('/getblogbyid/:id' , verifyToken , Admin.getBlogbyid)

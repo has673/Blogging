@@ -141,20 +141,15 @@ function Dashboard() {
                 >
                   Delete
                 </button>
-                {/* <Link to={`/blog/${blog._id}`} >
+                <Link to={`/user/${user._id}`} >
                  <button
                  
                   className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
                 >
                   View
                 </button>
-                 </Link> */}
-                {/* <button
-                  onClick={() => console.log('View clicked for blog with id:', blog._id)}
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
-                >
-                  View
-                </button> */}
+                 </Link> 
+               
               </td>
             </tr>
           ))}
