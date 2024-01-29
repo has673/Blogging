@@ -27,7 +27,7 @@ function Singleblog() {
   return (
     <div>
       {loading ? (
-        <ClipLoader className='flex items-centerjustify-center' color="blue" size={50} loading={loading} />
+        <ClipLoader className='flex items-centerjustify-center' color="#2196F3" size={50} loading={loading} />
       ) : blog ? (
         <div className="flex">
           {blog.photo ? (

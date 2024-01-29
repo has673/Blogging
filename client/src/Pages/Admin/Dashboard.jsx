@@ -75,7 +75,7 @@ function Dashboard() {
   <div className="w-1/2">
     <h1 className="text-3xl font-bold mb-4">Blog List</h1>
     {loading ? (
-      <ClipLoader className='flex items-center justify-center' color="blue" size={50} loading={loading} />
+      <ClipLoader className='flex items-center justify-center' color="#2196F3" size={50} loading={loading} />
     ) : (
       <table className="min-w-full border border-gray-300">
         <thead>
@@ -121,7 +121,7 @@ function Dashboard() {
   <div className="w-1/2">
     <h1 className="text-3xl font-bold mb-4">User List</h1>
     {loading ? (
-      <ClipLoader className='flex items-center justify-center' color="blue" size={50} loading={loading} />
+      <ClipLoader className='flex items-center justify-center' color="#2196F3" size={50} loading={loading} />
     ) : (
       <table className="min-w-full border border-gray-300">
         <thead>
