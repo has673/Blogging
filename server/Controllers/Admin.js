@@ -14,6 +14,7 @@ async function getAllusers(req,res,next){
 async function getauser(req,res,next){
     try{
         const user = await User.findById(req.params.id)
+        console.log('user shown')
         res.status(200).json(user)
 
     }
@@ -26,6 +27,7 @@ async function getauser(req,res,next){
 async function deleteauser(req,res,next){
     try{
     const user = await User.findByIdAndDelete(req.params.id)
+    console.log('user deleted')
     res.status(200).json({message:'user deleted', user:user})
     }
     catch(err){
