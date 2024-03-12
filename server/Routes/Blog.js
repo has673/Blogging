@@ -9,7 +9,8 @@ router.post("/createBlog/:id" , verifyToken ,formidable(), Blog.CreateBlog)
 router.get('/getblogs' , verifyToken ,Blog.getBlogs)
  router.get('/getblogbyid/:id' ,/* verifyToken */ Blog.getBlogbyid)
 router.get('/getblogphoto/:id', Blog.getphoto)
-router.put('/updateblog/:id', verifyAdmin, Blog.updateblog)
+router.put('/updateblog/:id', verifyToken, verifyAdmin, Blog.updateblog)
+router.get('/searchblog', Blog.searchblog)
 
 
 

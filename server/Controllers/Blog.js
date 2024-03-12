@@ -124,8 +124,16 @@ async function getphoto(req, res, next) {
 const searchblog= async (req,res,next)=>{
     const {tag} = req.query
     try{
+        if(!tag){
+            return res.status.json({success : false , message : 'tag parameter required'})
+        }
 
-        const blogs = await Blog.find({tags:{tag}})
+        const blogs = await Blog.find({tags:{$in : tag}})
+        if (blogs.length === 0) {
+            return res.status(404).json({ success: false, message: 'No blogs found with the specified tag.' });
+          }
+      
+          res.status(200).json({ success: true, blogs });
 
     }
     catch(err){
