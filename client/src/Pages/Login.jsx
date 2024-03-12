@@ -48,7 +48,7 @@ function Login() {
           navigate('/Home')
       } else {
           // Handle other scenarios, like displaying an error message
-          console.error('Error:', res.data.message);
+          console.log('Error:', res.data.message);
           setErr(res.data.message);
       }
        

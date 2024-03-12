@@ -6,10 +6,10 @@ const router = express.Router()
 
 
 router.post("/createBlog/:id" , verifyToken ,formidable(), Blog.CreateBlog)
-router.get('/getblogs' ,  Blog.getBlogs)
+router.get('/getblogs' , verifyToken ,Blog.getBlogs)
  router.get('/getblogbyid/:id' ,/* verifyToken */ Blog.getBlogbyid)
 router.get('/getblogphoto/:id', Blog.getphoto)
-router.put('/updateblog/:id', Blog.updateblog)
+router.put('/updateblog/:id', verifyAdmin, Blog.updateblog)
 
 
 
