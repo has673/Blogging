@@ -46,6 +46,15 @@ async function myblogs(req,res,next){
         res.status(500).json({ message: 'Internal server error' });
       }
     };
+async function uploadphoto(req,res,next){
+    try{
+        const userId = req.user._id;
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal server error' });
+      }
+}
 
 module.exports = {
     

@@ -5,7 +5,7 @@ async function CreateBlog(req, res, next) {
     try {
         const userId = req.params.id;
         const { photo } = req.files;
-        const { title, content } = req.fields
+        const { title, content , tags  } = req.fields
         const newblog = new Blog({ ...req.fields, user: userId })
         if (photo) {
             newblog.photo.data = fs.readFileSync(photo.path);
@@ -16,7 +16,7 @@ async function CreateBlog(req, res, next) {
         const updatedUser = await User.findByIdAndUpdate(
             userId,
             {
-                $push: { blogs: { title, content } }, // Assuming 'blogs' is an array in the User model
+                $push: { blogs: { title, content , tags } }, // Assuming 'blogs' is an array in the User model
             },
             { new: true } // To get the updated document after the update
         );
@@ -61,6 +61,36 @@ async function getBlogbyid(req, res, next) {
         res.status(500).json({ message: 'internal server error' });
     }
 }
+const updateblog = async(req,res,next)=>{
+    try{
+        const {title, content , tags} = req.body
+        console.log('blod update')
+        const blogId = req.params.id
+        const updatedblog = await  Blog.findByIdAndUpdate(
+            blogId,
+            { $set : {title , content , tags} },
+                {new:true}
+            
+        )
+        if (!updatedblog) {
+            console.log('blog not found')
+            return res.status(404).json({ message: 'blog not found' });
+          }
+      
+          // Return the updated user information
+          console.log('blog update')
+          res.status(200).json(updatedblog);
+
+    }
+   catch(err){
+    console.log(err)
+    return res.status(500).send({
+        success: false,
+        message: "Erorr while getting photo",
+        err,
+    });
+   }
+}
 async function getphoto(req, res, next) {
     try {
         const blog = await Blog.findById(req.params.id).select("photo");
@@ -91,6 +121,23 @@ async function getphoto(req, res, next) {
         });
     }
 }
+const searchblog= async (req,res,next)=>{
+    const {tag} = req.query
+    try{
+
+        const blogs = await Blog.find({tags:{tag}})
+
+    }
+    catch(err){
+        console.log(err)
+        res.status(500).send({
+            success: false,
+            message: "Erorr while getting photo",
+            err,
+        });
+
+    }
+}
 
 
 
@@ -98,6 +145,8 @@ module.exports = {
     CreateBlog
     , getBlogs,
     getBlogbyid,
-    getphoto
+    getphoto,
+    searchblog,
+    updateblog
 
 }

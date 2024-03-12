@@ -10,6 +10,10 @@ const BlogSchema = new mongoose.Schema({
         required:true,
         
     },
+    tags: {
+        type: [String], // Change this to an array of strings
+      },
+  
     user:{
         type: mongoose.Schema.Types.ObjectId,
         ref:"User",
