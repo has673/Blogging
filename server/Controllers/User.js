@@ -48,17 +48,19 @@ async function myblogs(req,res,next){
     };
 const like = async(req,res,next)=>{
     try{
-       
+
+        const id = req.params.id
         const blog = await  Blog.findByIdAndUpdate(
-            req.params.id,
+              id,
             {$inc:{likes : 1  }},
             {new: true}
         )
         if(!blog){
           return   res.status(404).json({error : 'no blog found'})
-        }
-        res.status(200).json( blog , {message:'likde added'})
-        console.log('blog added')
+        } 
+        console.log('like  added')
+        return  res.status(200).json( blog.title)
+       
 
     }
     catch(err){
