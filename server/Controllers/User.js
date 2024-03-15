@@ -79,11 +79,60 @@ async function uploadphoto(req,res,next){
         res.status(500).json({ message: 'Internal server error' });
       }
 }
+const deletemyblog = async(req,res,next)=>{
+    try{
+        const userid = req.user._id
+        const blogid = req.params.id
+        const blog = await Blog.findOne({user: userid , _id:blogid})
+       if(!blog){
+          return res.status(404).json({message:"no blog found"})
+
+       }
+       await blog.remove()
+       console.log('blog')
+       return res.status(200).json({message:"blog deeleted"})
+
+
+    }
+    catch(err){
+        console.log(err)
+        return res.status(500).json({message:"internal sever error"})
+    }
+}
+
+const updateemyblog = async(req,res,next)=>{
+    try{
+        const userid = req.user._id
+        const blogid = req.params.id
+        const {tag , title , content} = req.body
+        
+        const blog = await Blog.findOne({user: userid , _id:blogid})
+       if(!blog){
+          return res.status(404).json({message:"no blog found"})
+
+       }
+       await blog.updateOne({$set:{tag , title , content}},
+        {new : true}
+       
+
+       )
+       console.log('blog')
+       return res.status(200).json({message:"blog updated"})
+
+
+    }
+    catch(err){
+        console.log(err)
+        return res.status(500).json({message:"internal sever error"})
+    }
+}
 
 module.exports = {
     
     getuserbyid,
     updateuser,
     myblogs,
-    like
+    like,
+    deletemyblog,
+    updateemyblog
 };

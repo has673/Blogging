@@ -9,5 +9,7 @@ router.get("/getuserbyid/:id", verifyToken, usercontroller.getuserbyid);
 router.put('/updateuser/:id', verifyToken, usercontroller.updateuser)
 router.get('/myblogs', verifyToken, usercontroller.myblogs)
 router.put('/likeblog/:id', verifyToken,usercontroller.like)
+router.delete('/deletemyblog/:id', verifyToken , usercontroller.deletemyblog)
+router.put('/updatemyblog/:id', verifyToken,usercontroller.updateemyblog)
 
 module.exports = router;
