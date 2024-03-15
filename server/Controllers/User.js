@@ -46,6 +46,28 @@ async function myblogs(req,res,next){
         res.status(500).json({ message: 'Internal server error' });
       }
     };
+const like = async(req,res,next)=>{
+    try{
+       
+        const blog = await  Blog.findByIdAndUpdate(
+            req.params.id,
+            {$inc:{likes : 1  }},
+            {new: true}
+        )
+        if(!blog){
+          return   res.status(404).json({error : 'no blog found'})
+        }
+        res.status(200).json( blog , {message:'likde added'})
+        console.log('blog added')
+
+    }
+    catch(err){
+        console.error(err);
+        res.status(500).json({ message: 'Internal server error' });
+
+    }
+
+}
 async function uploadphoto(req,res,next){
     try{
         const userId = req.user._id;
@@ -60,5 +82,6 @@ module.exports = {
     
     getuserbyid,
     updateuser,
-    myblogs
+    myblogs,
+    like
 };
