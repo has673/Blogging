@@ -28,8 +28,20 @@ const UserSchema = new mongoose.Schema({
         ref:'Blog',
         
     },
+    
    
-],
+]
+,
+Comments:[
+    {
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Comment',
+        
+    },
+    
+   
+]
+
     
     
 }

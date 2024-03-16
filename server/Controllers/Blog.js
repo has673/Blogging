@@ -146,6 +146,23 @@ const searchblog= async (req,res,next)=>{
 
     }
 }
+const commentsonblog = async(req,res,next)=>{
+    try{
+        const blogid = req.params.id
+        const blog = await Blog.findById(blogid).populate('Comments')
+        if (!blog) {
+            return res.status(404).json({ error: 'Blog post not found' });
+          }
+      
+          // Return the comments associated with the blog post
+          res.status(200).json({ comments: blog.Comments });
+
+    }
+    catch(err){
+        console.log(err)
+        return res.status(500).json({message:"internal server error"})
+    }
+}
 
 
 
@@ -155,6 +172,7 @@ module.exports = {
     getBlogbyid,
     getphoto,
     searchblog,
-    updateblog
+    updateblog,
+    commentsonblog
 
 }

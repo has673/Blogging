@@ -12,6 +12,8 @@ router.get('/getblogphoto/:id', Blog.getphoto)
 router.put('/updateblog/:id', verifyToken, verifyAdmin, Blog.updateblog)
 router.get('/searchblog', Blog.searchblog)
 
+router.get('/getcommentsonblog/:id',Blog.commentsonblog)
+
 
 
 

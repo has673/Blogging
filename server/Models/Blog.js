@@ -33,6 +33,15 @@ const BlogSchema = new mongoose.Schema({
         data: Buffer,
         contentType: String,
       },
+
+    Comments:[
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:'Comment',
+            required:'true'
+
+        }
+    ],
    
 },
  { timestamps: true }

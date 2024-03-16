@@ -12,6 +12,7 @@ const authRouter = require('./Routes/Auth');
 const adminRouter = require('./Routes/Admin');
 const userRouter = require('./Routes/User');
 const blogRouter = require('./Routes/Blog');
+const commentRouter = require('./Routes/Comment')
 require('dotenv').config();
 connectDB()
 app.listen(port, () => {
@@ -27,3 +28,4 @@ app.use('/auth', authRouter);
 app.use('/admin', adminRouter);
 app.use('/user', userRouter);
 app.use('/blog', blogRouter);
+app.use('/comment' , commentRouter)
