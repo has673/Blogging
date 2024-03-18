@@ -1,8 +1,10 @@
 const User = require('../Models/User');
 const Blog = require('../Models/Blog');
+const Comment = require('../Models/Comment');
 async function getuserbyid(req, res, next) {
     try {
-        const user = await User.findById(req.params.id);
+        const id = req.params.id
+        const user = await User.findById(id);
         res.json(user);
     } catch (err) {
         console.error(err);
@@ -126,6 +128,54 @@ const updateemyblog = async(req,res,next)=>{
         return res.status(500).json({message:"internal sever error"})
     }
 }
+const deletemycomment = async(req,res,next)=>{
+    try{
+        const userid = req.user._id
+        const commentid = req.params.id
+        const comment = await Comment.findOne({user: userid , _id:commentid})
+       if(!comment){
+          return res.status(404).json({message:"no blog comment"})
+
+       }
+       await comment.remove()
+       console.log('comment')
+       return res.status(200).json({message:"comment deeleted"})
+
+
+    }
+    catch(err){
+        console.log(err)
+        return res.status(500).json({message:"internal sever error"})
+    }
+}
+
+const updateemycomment = async(req,res,next)=>{
+    try{
+        const userid = req.user._id
+        const commentid = req.params.id
+        const Content = req.body.Content
+        
+        const comment = await Comment.findOne({user: userid , _id:commentid})
+       if(!comment){
+          return res.status(404).json({message:"no comment found"})
+
+       }
+       await comment.updateOne({$set:{ Content}},
+        {new : true}
+       
+
+       )
+       console.log('blog')
+       return res.status(200).json({message:"comment updated"})
+
+
+    }
+    catch(err){
+        console.log(err)
+        return res.status(500).json({message:"internal sever error"})
+    }
+}
+
 
 module.exports = {
     
@@ -134,5 +184,7 @@ module.exports = {
     myblogs,
     like,
     deletemyblog,
-    updateemyblog
+    updateemyblog,
+    deletemycomment,
+    updateemycomment
 };

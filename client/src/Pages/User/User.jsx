@@ -15,7 +15,7 @@ function User() {
       const fetchUser = async () => {
         try {
           setLoading(true);
-          const response = await axios.get(`http://localhost:3000/admin/Showauser/${id}`);
+          const response = await axios.get(`http://localhost:3000/User/getuserbyid/${id}`);
           setUser(response.data);
           console.log(response.data.email)
 

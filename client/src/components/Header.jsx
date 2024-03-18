@@ -1,17 +1,17 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { authcontext } from '../Context/Authcontext';
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from '../redux/slices/userslice';
 
 function Header() {
-  const { user, setUser } = useContext(authcontext);
+  const user = useSelector(state => state.user.currentUser);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // Perform logout logic, e.g., clear user data from context
-    setUser(null);
-    localStorage.removeItem('userId');
-    
-    // You may also want to perform any server-side logout logic (clearing session, etc.)
+    dispatch(logout());
+    // Optionally clear any local storage or perform server-side logout logic
+    navigate('/login');
   };
 
   return (
@@ -29,11 +29,11 @@ function Header() {
             <Link to="/contact" className="text-white hover:text-gray-300">
               Contact
             </Link>
-
+           
             {/* Profile Link */}
             {user ? (
               <>
-                <Link to="/profile" className="text-white hover:text-gray-300">
+                <Link to={`/user/${user.id}`}  className="text-white hover:text-gray-300">
                   Profile
                 </Link>
                 <button
