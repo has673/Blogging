@@ -2,23 +2,16 @@ const jwt = require('jsonwebtoken');
 const User = require('../Models/User');
 
 const verifyToken = (req, res, next) => {
-  const token = req.cookies.token;
-
-  if (!token) {
-    console.log('no token')
-    return res.status(401).json("You are not authenticated!");
-  }
-
-  jwt.verify(token, process.env.jwtsecret, async (err, data) => {
-    if (err) {
-      return res.status(403).json("Token is not valid!");
-    }
-
-    // Set user information in req.user
-    req.user = { _id: data._id, /* Add other user properties if needed */ };
-
+  try {
+    const decode = jwt.verify(
+      req.headers.authorization,
+      process.env.jwtsecret
+    );
+    req.user = decode;
     next();
-  });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const verifyAdmin = async (req, res, next) => {

@@ -1,33 +1,49 @@
-import React, { useEffect , useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { ClipLoader } from 'react-spinners'; 
-function Singleblog() {
-    const { id } = useParams(); // Access the id parameter from the route
-    const [blog, setBlog] = useState(null);
-    const[loading ,setLoading] = useState(true)
-    useEffect(() => {
-      
-    
-        fetchBlog();
-      }, [id]);
-      const fetchBlog = async () => {
-        try {
-          setLoading(true);
-          const response = await axios.get(`http://localhost:3000/blog/getblogbyid/${id}`);
-          setBlog(response.data);
-          console.log(response.data.title)
+import { ClipLoader } from 'react-spinners';
+import Comment from '../components/Comment'; // Import the Comment component
 
-        } catch (err) {
-          console.error(err);
-        } finally {
-          setLoading(false);
-        }
-      };
+function Singleblog() {
+  const { id } = useParams(); // Access the id parameter from the route
+  const [blog, setBlog] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [comments, setComments] = useState([]);
+  const [loadingComments, setLoadingComments] = useState(true);
+
+  useEffect(() => {
+    fetchBlog();
+    fetchComments();
+  }, [id]);
+
+  const fetchComments = async () => {
+    try {
+      setLoadingComments(true);
+      const response = await axios.get(`http://localhost:3000/blog/getcommentsonblog/${id}`);
+      setComments(response.data.comments);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoadingComments(false);
+    }
+  };
+
+  const fetchBlog = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get(`http://localhost:3000/blog/getblogbyid/${id}`);
+      setBlog(response.data);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div>
       {loading ? (
-        <ClipLoader className='flex items-centerjustify-center' color="#2196F3" size={50} loading={loading} />
+        <ClipLoader className='flex items-center justify-center' color="#2196F3" size={50} loading={loading} />
       ) : blog ? (
         <div className="flex">
           {blog.photo ? (
@@ -44,14 +60,21 @@ function Singleblog() {
           <div className="ml-4">
             <h1 className='font-bold'>{blog.title}</h1>
             <p>{blog.content}</p>
-            {/* Render the rest of the blog details here */}
+            <h2 className="mt-4 font-bold">Comments</h2>
+            {loadingComments ? (
+              <ClipLoader className='flex items-center justify-center' color="#2196F3" size={30} loading={loadingComments} />
+            ) : (
+              comments.map(comment => (
+                <Comment key={comment.id} comment={comment} />
+              ))
+            )}
           </div>
         </div>
       ) : (
         <p>Blog not found</p>
       )}
     </div>
-  )
+  );
 }
 
-export default Singleblog
+export default Singleblog;

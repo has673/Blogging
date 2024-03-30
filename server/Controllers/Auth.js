@@ -80,7 +80,7 @@ async function Login(req, res, next) {
        );
 
        console.log('logged in');
-       res.cookie("token", token).status(200).json({ email: user.email, token: token, id: user._id });
+       res.status(200).json({ email: user.email, token: token, id: user._id , role:user.role});
 
    } catch (err) {
        console.log(err);
