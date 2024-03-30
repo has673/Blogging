@@ -49,30 +49,53 @@ async function myblogs(req,res,next){
         res.status(500).json({ message: 'Internal server error' });
       }
     };
-const like = async(req,res,next)=>{
-    try{
-
-        const id = req.params.id
-        const blog = await  Blog.findByIdAndUpdate(
-              id,
-            {$inc:{likes : 1  }},
-            {new: true}
-        )
-        if(!blog){
-          return   res.status(404).json({error : 'no blog found'})
-        } 
-        console.log('like  added')
-        return  res.status(200).json( blog.title)
-       
-
-    }
-    catch(err){
-        console.error(err);
-        res.status(500).json({ message: 'Internal server error' });
-
-    }
-
-}
+    const like = async (req, res, next) => {
+        try {
+            const userId = req.user._id; // Get the current user's ID
+            const id = req.params.id; // Get the blog ID from the request parameters
+    
+            // Update the likes of the blog by incrementing by 1
+            const blog = await Blog.findByIdAndUpdate(id, { $inc: { likes: 1 } }, { new: true });
+    
+            // Check if the blog exists
+            if (!blog) {
+                return res.status(404).json({ error: 'Blog not found' });
+            }
+    
+            // Check if the user has already liked the blog
+            const user = await User.findById(userId);
+            if (user.likes.includes(id)) {
+                return res.status(400).json({ error: 'You have already liked this blog' });
+            }
+    
+            // Add the blog ID to the user's liked blogs array
+            user.likes.push(id);
+            await user.save();
+    
+            console.log('Like added');
+            return res.status(200).json({ message: 'Like added successfully' });
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ message: 'Internal server error' });
+        }
+    };
+    const checkLiked = async (req, res, next) => {
+        try {
+            const userId = req.user._id; // Get the current user's ID
+            const blogId = req.params.id; // Get the blog ID from the request parameters
+            console.log('checked like')
+            // Find the user by ID and check if the blog ID is present in the liked blogs array
+            const user = await User.findById(userId);
+            if (user.likes.includes(blogId)) {
+                return res.status(200).json({ liked: true });
+            } else {
+                return res.status(200).json({ liked: false });
+            }
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ message: 'Internal server error' });
+        }
+    };
 async function uploadphoto(req,res,next){
     try{
         const userId = req.user._id;
@@ -187,5 +210,6 @@ module.exports = {
     deletemyblog,
     updateemyblog,
     deletemycomment,
-    updateemycomment
+    updateemycomment,
+    checkLiked
 };

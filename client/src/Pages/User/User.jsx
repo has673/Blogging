@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { ClipLoader } from 'react-spinners'; 
 import { Link } from 'react-router-dom';
-import BlogCard from '../../components/BlogCard';
+import MyBlogCard from '../../components/MyBlogCard';
 
 function User() {
     const currentUser = useSelector((state) => state.user.currentUser);
@@ -35,7 +35,16 @@ function User() {
             setLoading(false);
         }
     };
+   const deleteblog = async ()=>{
+    try{
+        const res = axios.delete(`http://localhost:3000/User/deletemyblog/${blogId}`)
+        console.log('blod dellted')
 
+    }
+    catch(err){
+        console.log(err)
+    }
+   }
     const fetchBlogs = async () => {
         try {
             setLoadingBlogs(true);
@@ -72,7 +81,7 @@ function User() {
                         ) : (
                             <div className='flex-row'>
                                 {blogs.map(blog => (
-                                    <BlogCard key={blog._id} blog={blog} />
+                                    <MyBlogCard key={blog._id} blog={blog} ondelete={deleteblog(blog._id)}/>
                                 ))}
                             </div>
                         )}

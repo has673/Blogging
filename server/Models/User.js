@@ -28,9 +28,17 @@ const UserSchema = new mongoose.Schema({
         ref:'Blog',
         
     },
-    
+   
    
 ]
+,
+likes:[
+    {
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Blog',
+    },
+]
+
 ,
 Comments:[
     {
