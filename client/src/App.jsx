@@ -17,6 +17,7 @@ import Singleblog from './Pages/Singleblog';
 import User from './Pages/User/User';
 import Notfound from './Pages/Notfound';
 import Write from './Pages/User/Write';
+import EditBlog from './Pages/User/EditBlog';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
@@ -32,6 +33,7 @@ const router = createBrowserRouter(
         <Route path='/user/:id' element={<User/>} />
         <Route path='/updateprofile/:id' element={<UpdateProfile/>}/>
         <Route path='/writeblog' element={<Write/>}/>
+        <Route path='/editblog/:id' element={<EditBlog/>}/>
         <Route path= "*" element={<Notfound/>}/>
         {/* <Route path='/' element={<Privateroute />}>
         <Route path='/Profile' element={<Profile />} />
