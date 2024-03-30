@@ -3,7 +3,7 @@ const User = require('../Models/User')
 const fs = require('fs')
 async function CreateBlog(req, res, next) {
     try {
-        const userId = req.params.id;
+        const userId = req.user._id;
         const { photo } = req.files;
         const { title, content , tags  } = req.fields
         const newblog = new Blog({ ...req.fields, user: userId })

@@ -72,7 +72,10 @@ function User() {
                         <p>{user.name}</p>
                         <p>{user.role}</p>
                         <p>{user.phone}</p>
+                       
                         <Link to="/updateprofile/:id" className="text-blue-500">Edit Profile</Link>
+                        <div> <Link to="/writeblog" className="text-blue-500">writeblog</Link>
+                        </div>
                     </div>
                     <div>
                         <h2 className="font-bold text-2xl mt-4 mb-2">My Blogs</h2>

@@ -16,6 +16,7 @@ import Singleblog from './Pages/Singleblog';
 
 import User from './Pages/User/User';
 import Notfound from './Pages/Notfound';
+import Write from './Pages/User/Write';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
@@ -30,6 +31,7 @@ const router = createBrowserRouter(
         <Route path='/blog/:id' element={<Singleblog/>} />
         <Route path='/user/:id' element={<User/>} />
         <Route path='/updateprofile/:id' element={<UpdateProfile/>}/>
+        <Route path='/writeblog' element={<Write/>}/>
         <Route path= "*" element={<Notfound/>}/>
         {/* <Route path='/' element={<Privateroute />}>
         <Route path='/Profile' element={<Profile />} />
