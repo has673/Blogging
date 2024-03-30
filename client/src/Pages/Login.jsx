@@ -35,6 +35,8 @@ function Login() {
     });
 
       if (res.status === 200) {
+        const { token } = res.data; // Extract the JWT token from the response
+        localStorage.setItem('token', token);
         dispatch(loginSuccess(res.data));
         navigate('/Home');
       } else {

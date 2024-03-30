@@ -3,6 +3,7 @@ const Blog = require('../Models/Blog');
 const Comment = require('../Models/Comment');
 async function getuserbyid(req, res, next) {
     try {
+        console.log('user')
         const id = req.params.id
         const user = await User.findById(id);
         res.json(user);

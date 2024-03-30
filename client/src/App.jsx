@@ -9,6 +9,7 @@ import About from './Pages/About';
 import Contact from './Pages/Contact';
 import Dashboard from './Pages/Admin/Dashboard';
 import Forgot from './Pages/Forgot';
+import UpdateProfile from './Pages/User/UpdateProfile'
 import Profile from './Pages/User/Profile';
 import Privateroute from './components/Privateroute';
 import Singleblog from './Pages/Singleblog';
@@ -28,6 +29,7 @@ const router = createBrowserRouter(
         <Route path='/Dashboard' element={<Dashboard />} />
         <Route path='/blog/:id' element={<Singleblog/>} />
         <Route path='/user/:id' element={<User/>} />
+        <Route path='/updateprofile/:id' element={<UpdateProfile/>}/>
         <Route path= "*" element={<Notfound/>}/>
         {/* <Route path='/' element={<Privateroute />}>
         <Route path='/Profile' element={<Profile />} />
