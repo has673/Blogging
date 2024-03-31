@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginStart, loginSuccess, loginFailure } from '../redux/slices/userslice';
 import { Link, useNavigate } from 'react-router-dom';
-
+import { toast } from 'react-toastify';
 function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -36,11 +36,16 @@ function Login() {
 
       if (res.status === 200) {
         const { token } = res.data; // Extract the JWT token from the response
-        localStorage.setItem('token', token);
+        // localStorage.setItem('token', token);
+        // toast.success('Login successful!',{
+        //   hei
+        // });
         dispatch(loginSuccess(res.data));
         navigate('/Home');
       } else {
+        toast.error('login error')
         dispatch(loginFailure());
+        
       }
     } catch (error) {
       dispatch(loginFailure());

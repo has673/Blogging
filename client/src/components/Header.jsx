@@ -33,7 +33,7 @@ function Header() {
             {/* Profile Link */}
             {user ? (
               <>
-                <Link to={`/user/${user.id}`}  className="text-white hover:text-gray-300">
+                <Link to={`/user/${user.uid}`}  className="text-white hover:text-gray-300">
                   Profile
                 </Link>
                 <button

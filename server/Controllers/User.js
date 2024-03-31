@@ -107,6 +107,7 @@ async function uploadphoto(req,res,next){
 }
 const deletemyblog = async(req,res,next)=>{
     try{
+        console.log('delete my  blog')
         const userid = req.user._id
         const blogid = req.params.id
         const blog = await Blog.findOne({user: userid , _id:blogid})
@@ -114,7 +115,7 @@ const deletemyblog = async(req,res,next)=>{
           return res.status(404).json({message:"no blog found"})
 
        }
-       await blog.remove()
+       await blog.deleteOne()
        console.log('blog')
        return res.status(200).json({message:"blog deeleted"})
 
@@ -130,20 +131,21 @@ const updateemyblog = async(req,res,next)=>{
     try{
         const userid = req.user._id
         const blogid = req.params.id
-        const {tag , title , content} = req.body
+        const {tags , title , content} = req.body
+        console.log('update your blog')
         
         const blog = await Blog.findOne({user: userid , _id:blogid})
        if(!blog){
           return res.status(404).json({message:"no blog found"})
 
        }
-       await blog.updateOne({$set:{tag , title , content}},
+       await blog.updateOne({$set:{tags , title , content}},
         {new : true}
        
 
        )
        console.log('blog')
-       return res.status(200).json({message:"blog updated"})
+       return res.status(200).json({blog})
 
 
     }

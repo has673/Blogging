@@ -16,7 +16,7 @@ function SingleBlog() {
     const [comments, setComments] = useState([]);
     const [loadingComments, setLoadingComments] = useState(true);
     const [isLiked, setIsLiked] = useState(false); // Track if the user has already liked the blog
-    const userId = useSelector(state => state.user.currentUser.id);
+    const userId = useSelector(state => state.user.currentUser.uid);
     const token = localStorage.getItem('token');
     console.log(userId)
 

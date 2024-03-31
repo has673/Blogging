@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { ClipLoader } from 'react-spinners'; 
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import MyBlogCard from '../../components/MyBlogCard';
 
 function User() {
+    const {id} = useParams()
     const currentUser = useSelector((state) => state.user.currentUser);
     const [user, setUser] = useState(null);
     const [blogs, setBlogs] = useState([]);
@@ -15,7 +16,7 @@ function User() {
 
     useEffect(() => {
         if (currentUser) {
-            fetchUser(currentUser.id);
+            fetchUser(currentUser.uid);
             fetchBlogs();
         }
     }, [currentUser]);
@@ -35,9 +36,14 @@ function User() {
             setLoading(false);
         }
     };
-   const deleteblog = async ()=>{
+   const deleteblog = async (blogId)=>{
+    console.log('blog delete your')
     try{
-        const res = axios.delete(`http://localhost:3000/User/deletemyblog/${blogId}`)
+        const res = await  axios.delete(`http://localhost:3000/User/deletemyblog/${blogId}`,{
+            headers:{
+                Authorization:token
+            }
+        })
         console.log('blod dellted')
 
     }
@@ -73,7 +79,7 @@ function User() {
                         <p>{user.role}</p>
                         <p>{user.phone}</p>
                        
-                        <Link to="/updateprofile/:id" className="text-blue-500">Edit Profile</Link>
+                        <div><Link to={`/updateprofile/${id}`} className="text-blue-500">Edit Profile</Link></div>
                         <div> <Link to="/writeblog" className="text-blue-500">writeblog</Link>
                         </div>
                     </div>
@@ -82,9 +88,9 @@ function User() {
                         {loadingBlogs ? (
                             <ClipLoader className='flex items-centerjustify-center' color="#2196F3" size={50} loading={loadingBlogs} />
                         ) : (
-                            <div className='flex-row'>
+                            <div className='flex flex-row'>
                                 {blogs.map(blog => (
-                                    <MyBlogCard key={blog._id} blog={blog} ondelete={deleteblog(blog._id)}/>
+                                    <MyBlogCard key={blog._id} blog={blog}  ondelete={() => deleteblog(blog._id)}/>
                                 ))}
                             </div>
                         )}

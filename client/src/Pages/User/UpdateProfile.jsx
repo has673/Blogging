@@ -4,20 +4,24 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { ClipLoader } from 'react-spinners'; // Import ClipLoader
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 function UpdateProfile() {
     const currentUser = useSelector((state) => state.user.currentUser);
+    const navigate = useNavigate()
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
-    const token = localStorage.getItem('token'); // Retrieve token from local storage
+    const token = currentUser.token; // Retrieve token from local storage
+    console.log('user token',token)
 
     useEffect(() => {
         if (currentUser) {
-            fetchUser(currentUser.id);
+            fetchUser(currentUser.uid);
         }
     }, [currentUser]);
 
@@ -51,6 +55,8 @@ function UpdateProfile() {
                 }
             });
             console.log('Profile updated:', response.data);
+            // toast.success('Profile updated')
+            navigate('/Home')
             setError('');
             // Optionally redirect the user to another page after successful update
         } catch (err) {

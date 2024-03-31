@@ -13,11 +13,11 @@ import UpdateProfile from './Pages/User/UpdateProfile'
 import Profile from './Pages/User/Profile';
 import Privateroute from './components/Privateroute';
 import Singleblog from './Pages/Singleblog';
-
+import { ToastContainer, toast } from 'react-toastify';
 import User from './Pages/User/User';
 import Notfound from './Pages/Notfound';
 import Write from './Pages/User/Write';
-import EditBlog from './Pages/User/EditBlog';
+import EditBlog from './Pages/User/EditBlog'
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
@@ -49,6 +49,7 @@ function App() {
   return (
     <>
       <RouterProvider router={router} />
+      <ToastContainer/>
 
     </>
   )

@@ -1,18 +1,16 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux'; // Import useSelector to access the Redux store
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-
 function Write() {
-    const navigate = useNavigate();
+    const navigate = useNavigate()
+    const currentUser = useSelector((state) => state.user.currentUser);
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
-    const [tagsInput, setTagsInput] = useState(''); // State to store the input string of tags
-    const [tags, setTags] = useState([]); // State to store the array of tags
+    const [tags, setTags] = useState([]);
     const [photo, setPhoto] = useState(null);
-    const token = localStorage.getItem('token');
-    const userId = useSelector(state => state.user.currentUser.id); // Access userId from Redux store
+    const [tagsInput, setTagsInput] = useState('');
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -23,9 +21,7 @@ function Write() {
             formData.append('tags', JSON.stringify(tags)); // Convert tags array to JSON string
 
             // Append userId to formData if needed
-            if (userId) {
-                formData.append('userId', userId);
-            }
+           formData.append('user', currentUser.uid)
 
             // Append photo if it exists
             if (photo) {
@@ -37,7 +33,7 @@ function Write() {
                 formData,
                 {
                     headers: {
-                        'Authorization': token,
+                        'Authorization': currentUser.token,
                         'Content-Type': 'multipart/form-data'
                     }
                 }
@@ -61,6 +57,7 @@ function Write() {
         // Update the tags state with the new array of tags
         setTags(trimmedTagsArray);
     };
+
 
     return (
         <div className="container mx-auto mt-8">
@@ -93,8 +90,8 @@ function Write() {
                     <input
                         type="text"
                         id="tags"
-                        value={tagsInput}
-                        onChange={handleTagsInputChange} // Use the handleTagsInputChange function for input change
+                        value={tagsInput} 
+                        onChange={handleTagsInputChange} 
                         className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
                     />
                 </div>
@@ -108,8 +105,8 @@ function Write() {
                         className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
                     />
                 </div>
-                <button onClick={handleSubmit} type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
-                     Submit
+                <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
+                    Submit
                 </button>
             </form>
         </div>
