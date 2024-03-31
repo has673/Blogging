@@ -53,7 +53,7 @@ function EditBlog() {
             const formData = new FormData();
             formData.append('title', title);
             formData.append('content', content);
-            formData.append('tags', JSON.stringify(tags)); // Convert tags array to JSON string
+            // formData.append('tags', JSON.stringify(tags)); // Convert tags array to JSON string
 
             // Append userId to formData if needed
            formData.append('user', currentUser.uid)
@@ -61,18 +61,17 @@ function EditBlog() {
         
             const res = await axios.put(
                            `http://localhost:3000/User/updatemyblog/${id}`,
-                            {
-                                 title: title,
-                                 content: content,
-                             },
+                            formData,
                              {
                                  headers: {
                                      'Authorization': currentUser.token,
-                                    'Content-Type': 'multipart/form-data'
+                                     
                                  }
                              }
-                         );
-
+                        );
+        setBlog(res.data.blog)
+         setTitle(res.data.title)
+         setContent(res.data.content)
          navigate('/Home')
             console.log('Blog post edited:', res.data);
             // Optionally, you can redirect the user to another page or perform other actions after successful submission

@@ -46,7 +46,7 @@ function UpdateProfile() {
         e.preventDefault();
         try {
             setLoading(true);
-            const response = await axios.put(`http://localhost:3000/User/updateuser/${currentUser.id}`, {
+            const response = await axios.put(`http://localhost:3000/User/updateuser/${currentUser.uid}`, {
                 name,
                 phone
             }, {

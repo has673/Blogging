@@ -127,33 +127,37 @@ const deletemyblog = async(req,res,next)=>{
     }
 }
 
-const updateemyblog = async(req,res,next)=>{
-    try{
-        const userid = req.user._id
-        const blogid = req.params.id
-        const {tags , title , content} = req.body
-        console.log('update your blog')
-        
-        const blog = await Blog.findOne({user: userid , _id:blogid})
-       if(!blog){
-          return res.status(404).json({message:"no blog found"})
+const updatemyblog = async (req, res, next) => {
+    try {
+        const userId = req.user._id;
+        console.log("User ID:", userId);
 
-       }
-       await blog.updateOne({$set:{tags , title , content}},
-        {new : true}
-       
+        const blogId = req.params.id;
+        console.log("Blog ID:", blogId);
 
-       )
-       console.log('blog')
-       return res.status(200).json({blog})
+        const { title, content } = req.body;
+        console.log("Updating blog...");
 
+        // Validate title and content if necessary
 
+        const updatedBlog = await Blog.findByIdAndUpdate(
+            blogId,
+            { title, content },
+            { new: true }
+        );
+
+        if (!updatedBlog) {
+            return res.status(404).json({ message: "Blog not found" });
+        }
+
+        console.log("Blog updated:", updatedBlog);
+        return res.status(200).json({ message: "Blog updated successfully", blog: updatedBlog });
+    } catch (err) {
+        console.error("Error updating blog:", err);
+        return res.status(500).json({ message: "Internal server error" });
     }
-    catch(err){
-        console.log(err)
-        return res.status(500).json({message:"internal sever error"})
-    }
-}
+};
+
 const deletemycomment = async(req,res,next)=>{
     try{
         const userid = req.user._id
@@ -210,7 +214,7 @@ module.exports = {
     myblogs,
     like,
     deletemyblog,
-    updateemyblog,
+    updatemyblog,
     deletemycomment,
     updateemycomment,
     checkLiked

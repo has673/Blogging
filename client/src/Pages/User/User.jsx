@@ -88,7 +88,7 @@ function User() {
                         {loadingBlogs ? (
                             <ClipLoader className='flex items-centerjustify-center' color="#2196F3" size={50} loading={loadingBlogs} />
                         ) : (
-                            <div className='flex flex-row'>
+                            <div className="flex flex-row justify-center">
                                 {blogs.map(blog => (
                                     <MyBlogCard key={blog._id} blog={blog}  ondelete={() => deleteblog(blog._id)}/>
                                 ))}
