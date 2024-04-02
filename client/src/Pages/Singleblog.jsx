@@ -146,7 +146,7 @@ const checkLiked = async()=>{
                         <img
                             src={`http://localhost:3000/blog/getblogphoto/${blog._id}`}
                             alt={`Photo for ${blog.title}`}
-                            className="w-1/4 h-auto"
+                            className="w-1/4 h-full"
                         />
                     ) : (
                         <div className="bg-gray-300 w-1/4 h-40 flex items-center justify-center">
