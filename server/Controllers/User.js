@@ -211,7 +211,24 @@ const updateemycomment = async(req,res,next)=>{
         return res.status(500).json({message:"internal sever error"})
     }
 }
+const mylikes=async(req,res,next)=>{
+    try{
+        const userid = req.user._id
+        const user = await  User.findById(userid)
+        const likes = user.likes
+       const likedBlogs = await Promise.all(likes.map(async (blogId) => {
+        const blog = await Blog.findById(blogId);
+        return blog;
+    }));
 
+    return res.status(200).json({ likedBlogs });
+    }
+    catch(err){
+        console.log(err)
+        return res.status(500).json({message:'internal server error'})
+
+    }
+}
 
 module.exports = {
     
@@ -223,5 +240,6 @@ module.exports = {
     updatemyblog,
     deletemycomment,
     updateemycomment,
-    checkLiked
+    checkLiked,
+    mylikes
 };

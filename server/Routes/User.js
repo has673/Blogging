@@ -9,6 +9,7 @@ router.get("/getuserbyid/:id", verifyToken,  usercontroller.getuserbyid);
 router.put('/updateuser/:id', verifyToken, usercontroller.updateuser)
 router.get('/myblogs', verifyToken, usercontroller.myblogs)
 router.get('/checkedliked/:id', verifyToken, usercontroller.checkLiked)
+router.get('/likedblogs' ,  verifyToken , usercontroller.mylikes)
 router.put('/likeblog/:id', verifyToken,usercontroller.like)
 router.delete('/deletemyblog/:id', verifyToken , usercontroller.deletemyblog)
 router.put('/updatemyblog/:id', verifyToken,usercontroller.updatemyblog)
