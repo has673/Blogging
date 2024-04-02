@@ -1,10 +1,14 @@
-import React from 'react';
 
-function Comment({ comment }) {
+import React from 'react';
+import { MdDelete } from "react-icons/md";
+function Comment({ comment , mycomment , ondelete}) {
+ 
+
   return (
-    <div className="border p-3 my-3">
-      <h3 className="font-semibold">{comment.name}</h3>
+    <div className="border p-3 my-3 flex flex-row justify-evenly">
+    
       <p>{comment.Content}</p>
+      {mycomment && <MdDelete onClick={ondelete} />}
     </div>
   );
 }

@@ -159,16 +159,22 @@ const updatemyblog = async (req, res, next) => {
 };
 
 const deletemycomment = async(req,res,next)=>{
+  
     try{
         const userid = req.user._id
+        console.log(userid)
         const commentid = req.params.id
-        const comment = await Comment.findOne({user: userid , _id:commentid})
+     
+
+         const comment = await Comment.findByIdAndDelete({User:userid,  _id:commentid})
+        console.log(comment)
+        console.log('fpund')
+        
        if(!comment){
           return res.status(404).json({message:"no blog comment"})
 
        }
-       await comment.remove()
-       console.log('comment')
+       
        return res.status(200).json({message:"comment deeleted"})
 
 

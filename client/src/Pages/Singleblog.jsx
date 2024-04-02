@@ -5,6 +5,7 @@ import { ClipLoader } from 'react-spinners';
 import Comment from '../components/Comment'; // Import the Comment component
 import { AiFillLike, AiOutlineLike } from "react-icons/ai";
 import { useSelector } from 'react-redux';
+import MakeComment from '../components/MakeComment';
 
 // import { checkLiked } from '../../../server/Controllers/User';
 
@@ -13,11 +14,13 @@ function SingleBlog() {
     const [blog, setBlog] = useState(null);
     const [loading, setLoading] = useState(true);
     const[my , setMy] = useState(false)
+    const[mycomment, setMyComment] = useState(false)
+    const[content , setContent ]= useState('')
     const [comments, setComments] = useState([]);
     const [loadingComments, setLoadingComments] = useState(true);
     const [isLiked, setIsLiked] = useState(false); // Track if the user has already liked the blog
     const userId = useSelector(state => state.user.currentUser.uid);
-    const token = localStorage.getItem('token');
+    const token = useSelector(state => state.user.currentUser.token);
     console.log(userId)
 
     useEffect(() => {
@@ -25,7 +28,26 @@ function SingleBlog() {
         fetchComments();
         checkLiked()
     }, [id]);
-
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            await axios.post(
+                `http://localhost:3000/comment/makecomment/${id}`,
+                { Content : content},
+                {
+                    headers: {
+                        Authorization: token
+                    }
+                }
+            );
+            setContent('')
+            fetchComments()
+       
+            // You might want to trigger a re-fetch of comments in the parent component
+        } catch (err) {
+            console.error(err);
+        }
+    };
     const fetchBlog = async () => {
         try {
             setLoading(true);
@@ -45,12 +67,31 @@ function SingleBlog() {
             setLoading(false);
         }
     };
-
+    const deletemycomment = async(commentid)=>{
+        try{
+          const res = await axios.delete(`http://localhost:3000/User/deletemycomment/${commentid}`,{
+            headers:{
+              Authorization:token
+            }
+          })
+          console.log(res.data)
+          fetchComments()
+        //   fetchComments()
+        }
+        
+        catch(err){
+          console.log(err)
+        }
+    
+      }
     const fetchComments = async () => {
         try {
             setLoadingComments(true);
             const response = await axios.get(`http://localhost:3000/blog/getcommentsonblog/${id}`);
             setComments(response.data.comments);
+            console.log(response.data.comments)
+            const hasUserComment = response.data.comments.some(comment => comment.User === userId);
+            setMyComment(hasUserComment);
         } catch (err) {
             console.error(err);
         } finally {
@@ -124,10 +165,12 @@ const checkLiked = async()=>{
                             <ClipLoader className='flex items-center justify-center' color="#2196F3" size={30} loading={loadingComments} />
                         ) : (
                             comments.map(comment => (
-                                <Comment key={comment.id} comment={comment} />
+                                <Comment key={comment._id} comment={comment} mycomment={mycomment} ondelete={()=>deletemycomment(comment._id)}/>
                             ))
                         )}
+                        <MakeComment content={content}  blogId={id} handleSubmit={handleSubmit} setContent={setContent}/>
                     </div>
+                   
                 </div>
             ) : (
                 <p>Blog not found</p>

@@ -32,7 +32,7 @@ const User = require('../Models/User')
             return res.status(404).json({ message: 'blog not found' });
         }
         console.log('comment created')
-        return res.status(200).json({message:"comment created"})
+        return res.status(200).json({comment})
 
     }
     catch(err){
